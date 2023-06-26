@@ -35,6 +35,7 @@ public class controllerCompras {
             MongoCollection<Document> pedidoss = database.getCollection("pedidos");
             MongoCollection<Document> factura = database.getCollection("facturas");
             MongoCollection<Document> usuarios = database.getCollection("usuarios");
+            MongoCollection<Document> carritos = database.getCollection("carritos");
 
 
             for (Document doc : productos.find()) {
@@ -92,7 +93,7 @@ public class controllerCompras {
 
     public  ArrayList<user> getUsuario() {
         return usuario;
-    }
+    } 
 
     public ArrayList<pedido> getPedidos() {
         return pedidos;
