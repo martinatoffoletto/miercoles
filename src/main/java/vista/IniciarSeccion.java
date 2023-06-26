@@ -22,6 +22,7 @@ public class IniciarSeccion {
         public FrmLogin() {
             super("Login");
             setSize(400, 200);
+            setModal(true);
             setLocationRelativeTo(null);
             setContentPane(pnlPrincipal);
             asignarDatosCombo();
@@ -32,6 +33,7 @@ public class IniciarSeccion {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //genera menu principal
+
                     Principal menuPrincipal = new Principal(() comboBox1.getSelectedItem());
                     menuPrincipal.setVisible(true);
                     setVisible(false);

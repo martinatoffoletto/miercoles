@@ -4,11 +4,12 @@ import javax.swing.*;
 import clases.*;
 import controllers.*;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pedido extends JFrame{
+public class Pedido extends JDialog{
     private JButton relizarPedidoButton;
     private JPanel pnlPrincipal;
     private JButton agregarButton;
@@ -20,25 +21,25 @@ public class Pedido extends JFrame{
 
     private List<producto> productos = new ArrayList<producto>();
 
-    public Pedido(){
-        super("Pedidos");
-        setSize(400, 200);
-        setLocationRelativeTo(null);
-        setContentPane(pnlPrincipal);
-        asignarDatosCombo();
+    public Pedido(Window owner){
+        super(owner, "Pedidos");
+        this.setSize(400, 200);
+        this.setModal(true);
+        this.setLocationRelativeTo(null);
+        this.setContentPane(pnlPrincipal);
 
-        //
-
-
-    }
-
-    private void asignarDatosCombo() {
+        //asigna datos
         ArrayList<producto> Productos = controllerCompras.getProds();
-
 
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         modelo.addAll(Productos);
         comboBox1.setModel(modelo);
+
+
     }
+
+
+
+
 
 }
