@@ -5,30 +5,29 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import dao.*;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class controllerCompras {
-     private ArrayList<producto> prods;
+    private ArrayList<producto> prods;
     private ArrayList<factura> facturas;
     private ArrayList<user> usuario;
     private ArrayList<pedido> pedidos;
 
     public controllerCompras(){
-        this.prods = new ArrayList<>();
-        this.facturas = new ArrayList<>();
-        this.usuario = new ArrayList<>();
-        this.pedidos = new ArrayList<>();
-        CargarDatos(prods,facturas,usuario,pedidos);
-
+        this.prods = new ArrayList<producto>();
+        this.facturas = new ArrayList<factura>();
+        this.usuario = new ArrayList<user>();
+        this.pedidos = new ArrayList<pedido>();
+        CargarDatos();
     }
 
 
     //carga datos de la base de datos
-    public void CargarDatos(ArrayList<producto> prods, ArrayList<factura> facturas, ArrayList<user> usuario, ArrayList<pedido> pedidos){
+
+   public void CargarDatos(){
         String uri = "mongodb+srv://matoffo:Jimin3002@cluster0.6ertzut.mongodb.net/?retryWrites=true&w=majority";
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase database = mongoClient.getDatabase("TP");
@@ -40,30 +39,32 @@ public class controllerCompras {
 
             for (Document doc : productos.find()) {
                 producto product = new producto();
-                prods.add(product);
+                this.prods.add(product);
             }
 
             for (Document doc : usuarios.find()) {
                 user usuario = new user();
-                usuario.add(usuario);
+                this.usuario.add(usuario);
             }
 
             for (Document doc : factura.find()) {
                 factura fact = new factura();
-                facturas.add(fact);
+                this.facturas.add(fact);
             }
 
             for (Document doc : pedidoss.find()) {
                 pedido pedido = new pedido();
-                pedidos.add(pedido);
+                this.pedidos.add(pedido);
             }
         }
     }
 
 
 
+
+
     public void agregarProducto(producto prod){
-        Prods.add(prod);
+        this.prods.add(prod);
 
 
     }
@@ -89,11 +90,13 @@ public class controllerCompras {
         return facturas;
     }
 
-    public static ArrayList<user> getUsuario() {
+    public  ArrayList<user> getUsuario() {
         return usuario;
     }
 
     public ArrayList<pedido> getPedidos() {
         return pedidos;
     }
+
+
 }
