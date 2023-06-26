@@ -3,8 +3,12 @@ package clases;
 import clases.carrito;
 
 public class pedido {
+    public carrito getContenido() {
+        return contenido;
+    }
+
     private carrito contenido;
-    private user comprador;
+    ;
 
 
 
@@ -14,9 +18,8 @@ public class pedido {
         preciofinal= contenido.getPrecio();
         return preciofinal;
     }
-    public pedido(carrito contenido, user comprador) {
+    public pedido(carrito contenido) {
         this.contenido = contenido;
-        this.comprador = comprador;
         preciofinal=0;
     }
 

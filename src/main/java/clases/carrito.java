@@ -6,6 +6,12 @@ import java.util.List;
 public class carrito {
     private ArrayList<producto> carro;
 
+    public user getUsuario() {
+        return usuario;
+    }
+
+    private user usuario;
+
 
 
     private int precio;
@@ -13,7 +19,8 @@ public class carrito {
         return precio;
     }
 
-    public carrito() {
+    public carrito(user usuario) {
+        this.usuario=usuario;
         ArrayList<producto> carro= new ArrayList<producto>();
         precio=0;
     }

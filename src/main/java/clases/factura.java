@@ -2,6 +2,11 @@ package clases;
 
 public class factura {
     private String Formapago;
+
+    public pedido getPedidoaFacturar() {
+        return pedidoaFacturar;
+    }
+
     private pedido pedidoaFacturar;
 
     public factura(String formapago, pedido pedidoaFacturar) {
