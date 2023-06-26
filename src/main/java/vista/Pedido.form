@@ -32,20 +32,12 @@
           <text value="Pedido"/>
         </properties>
       </component>
-      <component id="8fc7c" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+      <component id="8fc7c" class="javax.swing.JComboBox" binding="elijeProducto">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
-      </component>
-      <component id="1c3d1" class="javax.swing.JTextField" binding="textField1" default-binding="true">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
         <properties>
-          <text value=""/>
+          <model/>
         </properties>
       </component>
       <component id="749d1" class="javax.swing.JButton" binding="agregarButton" default-binding="true">
@@ -70,6 +62,19 @@
         </constraints>
         <properties>
           <text value="Relizar Pedido"/>
+        </properties>
+      </component>
+      <component id="7fbff" class="javax.swing.JComboBox" binding="elijeCant">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="1"/>
+            <item value="2"/>
+            <item value="3"/>
+            <item value="4"/>
+          </model>
         </properties>
       </component>
     </children>

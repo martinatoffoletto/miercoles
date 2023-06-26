@@ -7,8 +7,8 @@ public class Carrito {
     private JPanel pnlCarrito;
     private JButton comprarButton;
     private JComboBox comboBox2;
-    private JList list1;
-
+    private JList listaProductos;
+    private JLabel lblPrecioFinal;
 
 
 }

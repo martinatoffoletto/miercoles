@@ -30,6 +30,7 @@ public class Principal extends JFrame{
         this.setLocationRelativeTo(null);
 
         //Muestra datos del usuario
+
         //
 
         //Accede a pedido
