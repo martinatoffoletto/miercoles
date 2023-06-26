@@ -35,7 +35,6 @@ public class producto {
     }
 
 
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -46,11 +45,9 @@ public class producto {
     }
 
 
-
     public ArrayList<File> getVideos() {
         return videos;
     }
-
 
 
     public ArrayList<String> getComents() {
