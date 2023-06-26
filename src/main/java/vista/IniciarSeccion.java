@@ -20,21 +20,23 @@ public class IniciarSeccion {
         private JButton cerrarButton;
 
         public FrmLogin() {
+            //Constructor
             super("Login");
-            setSize(400, 200);
-            setModal(true);
-            setLocationRelativeTo(null);
-            setContentPane(pnlPrincipal);
-            asignarDatosCombo();
+            this.setSize(400, 200);
+            this.setLocationRelativeTo(null);
+            this.setContentPane(pnlPrincipal);
+            this.asignarDatosCombo();
 
             //permite ingresar
+
+
 
             ingresarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //genera menu principal
 
-                    Principal menuPrincipal = new Principal(() comboBox1.getSelectedItem());
+                    Principal menuPrincipal = new Principal((Usuario) comboBox1.getSelectedItem());
                     menuPrincipal.setVisible(true);
                     setVisible(false);
                 }

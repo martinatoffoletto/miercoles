@@ -1,5 +1,7 @@
 package vista;
 
+import clases.*;
+import controllers.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +17,9 @@ public class Principal extends JFrame{
     private Principal self;
 
 
-    public Principal (String titulo){
-        super(titulo);
+    public Principal (user usuario){
+        //genera
+        super(" Menu Principal ");
         //Pantalla
         this.setContentPane(pnlPrincipal);
         this.setSize(600,600);
@@ -24,10 +27,12 @@ public class Principal extends JFrame{
 
         //Establezco cierre
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        //Centrada
         this.setLocationRelativeTo(null);
-        this.self=this;
+
+        //Muestra datos del usuario
+        //
+
+        //Accede a pedido
 
         pedidoButton.addActionListener(new ActionListener() {
             @Override
@@ -40,10 +45,4 @@ public class Principal extends JFrame{
         });
     }
 
-    public static void main(String[] args) {
-        //Inicializo
-        Principal frame= new Principal( " Página Principal ");
-        frame.setVisible(true);
-
-    }
 }
