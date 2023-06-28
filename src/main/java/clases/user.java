@@ -1,6 +1,7 @@
 package clases;
 
 import java.sql.Time;
+import java.util.ArrayList;
 
 public class user {
     private String nombre;
@@ -43,5 +44,22 @@ public class user {
 
     public int getDni() {
         return dni;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "Nombre: " + nombre  + ",   DNI: " + dni;
+    }
+
+    public ArrayList<String> Datos(){
+        ArrayList<String> datos= new ArrayList<>();
+        datos.add(0,"Nombre: "+ nombre);
+        datos.add(1,"DNI: "+ dni);
+        datos.add(2,"Direccion: "+ direccion);
+        datos.add(2,"Categoria: "+ categoria);
+
+        return datos;
+
     }
 }

@@ -17,12 +17,13 @@ public class Pedido extends JDialog{
     private JComboBox elijeProducto;
     private JButton eliminarButton;
     private JComboBox elijeCant;
+    private JPanel pnlPedido;
 
 
     private List<producto> productos = new ArrayList<producto>();
 
-    public Pedido(Window owner){
-        super(owner, "Pedidos");
+    public Pedido(user user){
+       // super(owner, "Pedidos");
         this.setSize(400, 200);
         this.setModal(true);
         this.setLocationRelativeTo(null);
@@ -79,5 +80,7 @@ public class Pedido extends JDialog{
 
 
 
+
+ */
 
 }

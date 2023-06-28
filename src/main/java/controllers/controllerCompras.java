@@ -11,14 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class controllerCompras {
-    private ArrayList<producto> prods;
-    private ArrayList<factura> facturas;
-    private ArrayList<user> usuario;
-    private ArrayList<pedido> pedidos;
 
 
+    private static ArrayList<producto> prods;
 
-    private ArrayList<carrito> carritos;
+    private static ArrayList<factura> facturas;
+     static ArrayList<user> usuario;
+    private static ArrayList<pedido> pedidos;
+
+    private static ArrayList<carrito> carritos;
 
     public controllerCompras(){
         this.prods = new ArrayList<producto>();
@@ -26,7 +27,7 @@ public class controllerCompras {
         this.usuario = new ArrayList<user>();
         this.pedidos = new ArrayList<pedido>();
         this.carritos = new ArrayList<carrito>();
-        CargarDatos();
+        //CargarDatos();
     }
 
 
@@ -54,26 +55,28 @@ public class controllerCompras {
 
 
             for (Document doc : productos.find()) {
-                producto product = new producto();
-                this.prods.add(product);
+                //producto product = new producto();
+                //this.prods.add(product);
             }
 
             for (Document doc : usuarios.find()) {
-                user usuario = new user();
-                this.usuario.add(usuario);
+               // user usuario = new user();
+                //this.usuario.add(usuario);
             }
 
             for (Document doc : factura.find()) {
-                factura fact = new factura();
-                this.facturas.add(fact);
+               // factura fact = new factura();
+                //this.facturas.add(fact);
             }
 
             for (Document doc : pedidoss.find()) {
-                pedido pedido = new pedido();
-                this.pedidos.add(pedido);
+                //pedido pedido = new pedido();
+                //this.pedidos.add(pedido);
             }
         }
     }
+
+
 
 
 
@@ -116,17 +119,19 @@ public class controllerCompras {
 
 
     //lista productos
-    public ArrayList<producto> getProds() {
+    public static ArrayList<producto> getProds() {
         return prods;
     }
 
-   //iniciar seccion. LISTA USUARIOS Y SE SELECCIONA CUAL SE USARA
-    public  ArrayList<user> getUsuario() {return usuario;}
+   //iniciar seccion. LISTA USUARIOS
+    public static ArrayList<user> getUsuario() {
+        return usuario;
+    }
 
 
 
     //lista facturas, pedidos y carritos por usuario
-    public ArrayList<factura> getFacturas(user user)
+    public static ArrayList<factura> getFacturas(user user)
     {
         ArrayList<factura> factxusee= new ArrayList<factura>();
         for (factura fact: facturas){
@@ -135,10 +140,10 @@ public class controllerCompras {
                 factxusee.add(fact);
             }
         }
-        return facturas;
+        return factxusee;
     }
 
-    public ArrayList<pedido> getPedidos(user user) {
+    public static ArrayList<pedido> getPedidos(user user) {
         ArrayList<pedido> pedxuser = new ArrayList<pedido>();
         for (pedido ped: pedidos){
             int dni= ped.getContenido().getUsuario().getDni();

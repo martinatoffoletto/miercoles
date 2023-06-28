@@ -29,7 +29,7 @@
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Pedido"/>
+          <text value="Carrito"/>
         </properties>
       </component>
       <component id="8fc7c" class="javax.swing.JComboBox" binding="elijeProducto">
@@ -61,7 +61,7 @@
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Relizar Pedido"/>
+          <text value="Confirmar Carrito"/>
         </properties>
       </component>
       <component id="7fbff" class="javax.swing.JComboBox" binding="elijeCant">

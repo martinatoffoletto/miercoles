@@ -12,7 +12,7 @@ public class Carrito extends JFrame{
     private JList listaProductos;
     private JLabel lblPrecioFinal;
     private JPanel pnlPrincipal;
-
+/*
     public Carrito ( ) {
         super(" Carrito");
         //Pantalla
@@ -31,6 +31,8 @@ public class Carrito extends JFrame{
             }
         });
     }
+
+ */
 
 
 

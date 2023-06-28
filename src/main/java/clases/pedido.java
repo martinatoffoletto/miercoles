@@ -2,15 +2,15 @@ package clases;
 
 import clases.carrito;
 
+import java.util.Date;
+
 public class pedido {
-    public carrito getContenido() {
-        return contenido;
-    }
+
+    private int nroPedido;
+    private Date fechaPedido;
 
     private carrito contenido;
     ;
-
-
 
     private int preciofinal;
 
@@ -23,5 +23,14 @@ public class pedido {
         preciofinal=0;
     }
 
+    public carrito getContenido() {
+        return contenido;
+    }
 
+
+    @Override
+    public String toString() {
+        return "nroPedido=" + nroPedido +
+                ", fechaPedido=" + fechaPedido;
+    }
 }

@@ -1,18 +1,21 @@
 package vista;
 
 import clases.*;
-import controllers.*;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import clases.user;
+import controllers.controllerCompras;
 
 public class Principal extends JFrame{
     private JButton carritoButton;
     private JList list1;
     private JList list2;
     private JList list3;
-    private JButton pedidoButton;
     private JPanel pnlPrincipal;
+    private JButton verCatalogoButton;
 
     private Principal self;
 
@@ -29,21 +32,57 @@ public class Principal extends JFrame{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
-        //Muestra datos del usuario
+        carritoButton.addActionListener(new ActionListener() {
 
-        //
+            public void actionPerformed(ActionEvent e) {
 
-        //Accede a pedido
+                Pedido menuPrincipal = new Pedido((usuario);
+                menuPrincipal.setVisible(true);
+                setVisible(false);
+            }
+        });
 
-        pedidoButton.addActionListener(new ActionListener() {
+        verCatalogoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Pedido frame = new Pedido (self);
-                frame.setVisible(true);
-
+                Catalogo catalogo = new Catalogo();
+                catalogo.setVisible(true);
+                setVisible(false);
             }
         });
+
     }
 
+
+
+    //Muestra datos del usuario
+    public void asignarDatosUser(user user) {
+
+        DefaultListModel model = new DefaultListModel();
+        model.addAll(user.Datos());
+        list1.setModel(model);
+    }
+
+    public void asignarDatosFacturas(user user) {
+        DefaultListModel model = new DefaultListModel();
+        model.addAll(controllerCompras.getFacturas(user));
+        list2.setModel(model);
+    }
+
+    public void asignarDatosPedidos(user user) {
+        DefaultListModel model = new DefaultListModel();
+        model.addAll(controllerCompras.getPedidos(user));
+        list3.setModel(model);
+    }
+
+
+
+
+
+
 }
+
+
+
+
