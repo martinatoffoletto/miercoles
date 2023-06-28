@@ -2,85 +2,39 @@ package vista;
 
 import javax.swing.*;
 import clases.*;
-import controllers.*;
+import controllers.controllerCompras;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+public class Pedido extends JFrame{
 
-public class Pedido extends JDialog{
-    private JButton relizarPedidoButton;
+    private JPanel pnlCarrito;
+    private JButton comprarButton;
+    private JComboBox pagoComboBox2;
+    private JList listaProductos;
+    private JLabel lblPrecioFinal;
     private JPanel pnlPrincipal;
-    private JButton agregarButton;
-    private JComboBox elijeProducto;
-    private JButton eliminarButton;
-    private JComboBox elijeCant;
-    private JPanel pnlPedido;
 
-
-    private List<producto> productos = new ArrayList<producto>();
-
-    public Pedido(user user){
-       // super(owner, "Pedidos");
-        this.setSize(400, 200);
-        this.setModal(true);
-        this.setLocationRelativeTo(null);
+    public Pedido (user user) {
+        super(" Pedido");
+        //Pantalla
         this.setContentPane(pnlPrincipal);
+        this.setSize(600, 600);
+        //this.setModal(true);
 
-
-
-        //carga productos
-        ArrayList<producto> Productos = controllerCompras.getProds();
-
-        //elije Producto y cantidad
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-        modelo.addAll(Productos);
-        elijeProducto.setModel(modelo);
-        elijeCant.setModel(modelo);
-
-        ArrayList<producto> pedido = new ArrayList<producto>();
-        //permite agregar un producto
-        agregarButton.addActionListener(new ActionListener() {
-            int cant_producto;
-            String productoElegido;
-            producto ppelegido;
-            @Override
+        //Establezco cierre
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+/*
+        comprarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                productoElegido= elijeProducto.getSelectedItem().toString();
-                //pedido.add();
+                JOptionPane.showMessageDialog(null, "Compra Realizada");
             }
         });
 
-        //permiteEliminar producto
-
-        eliminarButton.addActionListener(new ActionListener() {
-            String productoEliminado;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                productoEliminado= elijeProducto.getSelectedItem().toString();
-                //pedido.remove()
-
-            }
-        });
-
-        //Finaliza pedido
-        relizarPedidoButton.addActionListener(new ActionListener() {
-            @Override
-                public void actionPerformed(ActionEvent e) {
-                    //cerrar ventana
-                    JOptionPane.showMessageDialog(null, "Pedido Realizado");
-                }
-        });
-
-
+ */
     }
 
 
 
 
-
- */
 
 }

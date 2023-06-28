@@ -1,11 +1,9 @@
 package vista;
 
-import clases.*;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
 import clases.user;
 import controllers.controllerCompras;
 
@@ -36,7 +34,7 @@ public class Principal extends JFrame{
 
             public void actionPerformed(ActionEvent e) {
 
-                Pedido menuPrincipal = new Pedido((usuario);
+                Carro menuPrincipal = new Carro(usuario);
                 menuPrincipal.setVisible(true);
                 setVisible(false);
             }

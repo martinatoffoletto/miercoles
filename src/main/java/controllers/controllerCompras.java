@@ -81,14 +81,14 @@ public class controllerCompras {
 
 
     //carrito guardar y crear
-    public carrito CrearCarrito(user user){
+    public static carrito CrearCarrito(user user){
         carrito car=new carrito(user);
         return car;
     }
-    public void GuardarCarro(carrito car){
+    public static void GuardarCarro(carrito car){
         carritos.add(car);//agregar a bd tmbn
-        MongoDatabase bs=IngresarBD();
-        MongoCollection<Document> carritos = bs.getCollection("carritos");
+       // MongoDatabase bs=IngresarBD();
+        //MongoCollection<Document> carritos = bs.getCollection("carritos");
         //carritos.insertOne(new Document().append("_id", new ObjectId()).append("title", "Ski Bloopers").append("genres", Arrays.asList("Documentary", "Comedy")));
 
 
@@ -155,7 +155,7 @@ public class controllerCompras {
     }
 
 
-    public ArrayList<carrito> getCarritos(user user) {
+    public static ArrayList<carrito> getCarritos(user user) {
         ArrayList<carrito> carritosuser= new ArrayList<carrito>();
         for (carrito carr: carritos){
            int dni= carr.getUsuario().getDni();
