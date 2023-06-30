@@ -25,6 +25,7 @@ public class Catalogo extends JDialog {
 
         //Constructor
         this.setContentPane(pnlPrincipal);
+        this.setSize(600,600);
         this.setModal(true);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);

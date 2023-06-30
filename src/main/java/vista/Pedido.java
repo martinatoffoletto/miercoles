@@ -20,24 +20,19 @@ public class Pedido extends JDialog{
 
     private List<producto> productos = new ArrayList<producto>();
 
-    public Pedido(Window owner,user Usuario){
+    public Pedido(Window owner,user Usuario, carrito compra){
         super(owner, "Pedidos");
         this.setSize(400, 200);
         this.setModal(true);
         this.setLocationRelativeTo(null);
         this.setContentPane(pnlPrincipal);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        //Elije Medio de Pago
 
 
 
-        //carga productos
-        ArrayList<producto> Productos = controllerCompras.getProds();
-
-        //elije Producto y cantidad
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-        modelo.addAll(Productos);
-
-        ArrayList<producto> pedido = new ArrayList<producto>();
-
+        //Muestra Precio
 
 
         //Finaliza pedido
@@ -46,14 +41,18 @@ public class Pedido extends JDialog{
                 public void actionPerformed(ActionEvent e) {
                     //cerrar ventana
                     JOptionPane.showMessageDialog(null, "Pedido Realizado");
+                    setVisible(false);
                 }
         });
 
 
     }
+    //Muestra Productos
+    public void asignarDatosUser(carrito compra) {
 
-
-
-
+        DefaultListModel model = new DefaultListModel();
+        model.addAll(compra.getProductos());
+        listaProductos.setModel(model);
+    }
 
 }

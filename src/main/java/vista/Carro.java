@@ -17,14 +17,12 @@ public class Carro extends JDialog{
     private JComboBox elijeProducto;
     private JButton eliminarButton;
     private JComboBox elijeCant;
-    private JPanel pnlPedido;
     private JComboBox ElegirCarro;
     private JButton guardarCarritoButton;
-
     private Carro self;
 
-
-    private List<producto> productos = new ArrayList<producto>();
+    //Lista Productos
+    private List<producto> productos = controllerCompras.getProds();
 
     public Carro(Window owner, user user){
         super(owner, "Carrito");
@@ -32,8 +30,11 @@ public class Carro extends JDialog{
         this.setModal(true);
         this.setLocationRelativeTo(null);
         this.setContentPane(pnlPrincipal);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-
+        //Asocia Productos
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        modelo.addAll(productos);
 
         //Elije carrito nuevo o viejo:
         DefaultComboBoxModel carritoelegir = new DefaultComboBoxModel();
@@ -42,6 +43,7 @@ public class Carro extends JDialog{
         carrosPers.add(nuevo);
         carritoelegir.addAll(carrosPers);
         ElegirCarro.setModel(carritoelegir);
+
         carrito carroElegido= controllerCompras.CrearCarrito(user);
         carroElegido=(carrito) carritoelegir.getSelectedItem();
         carrito finalCarroElegido = carroElegido;
@@ -57,10 +59,10 @@ public class Carro extends JDialog{
 
 
         //elije Producto y cantidad
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        DefaultComboBoxModel modelo1 = new DefaultComboBoxModel();
         DefaultComboBoxModel modelo2 = new DefaultComboBoxModel();
         modelo.addAll(controllerCompras.getProds());
-        elijeProducto.setModel(modelo);
+        elijeProducto.setModel(modelo1);
         elijeCant.setModel(modelo2);
         //int cant= (int) elijeCant.getSelectedItem();
 
@@ -83,7 +85,6 @@ public class Carro extends JDialog{
                 //AGREGAR WHILE X CANTIDAD
                 finalCarroElegido.borrarProd((producto) elijeProducto.getSelectedItem());
 
-
             }
         });
 
@@ -91,10 +92,9 @@ public class Carro extends JDialog{
         relizarPedidoButton.addActionListener(new ActionListener() {
             @Override
                 public void actionPerformed(ActionEvent e) {
-                Pedido Pedidos = new Pedido(self, user);
+                Pedido Pedidos = new Pedido(self, user, finalCarroElegido);
                 Pedidos.setVisible(true);
                 setVisible(false);
-
                 }
         });
 

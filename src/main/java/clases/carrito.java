@@ -34,6 +34,10 @@ public class carrito {
         precio-= prod.getPrecio();
     }
 
+    public ArrayList<producto> getProductos() {
+        return carro;
+    }
+
 
 
 }

@@ -30,16 +30,14 @@ public class Principal extends JFrame{
         this.setLocationRelativeTo(null);
 
         asignarDatosUser(usuario);
-        //asignarDatosFacturas(usuario);
-        //asignarDatosPedidos(usuario);
+        asignarDatosFacturas(usuario);
+        asignarDatosPedidos(usuario);
 
         carritoButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-
                 Carro menuPrincipal = new Carro(self, usuario);
                 menuPrincipal.setVisible(true);
-                setVisible(false);
             }
         });
 
@@ -49,7 +47,6 @@ public class Principal extends JFrame{
 
                 Catalogo catalogo = new Catalogo(self);
                 catalogo.setVisible(true);
-                setVisible(false);
             }
         });
 
@@ -76,19 +73,6 @@ public class Principal extends JFrame{
         model.addAll(controllerCompras.getPedidos(user));
         list3.setModel(model);
     }
-
-    /*public static void main(String[] args) {
-        //Inicializo
-        user usuar=new user("paula","roosvelt1234",1234);
-        Principal frame= new Principal( usuar);
-        frame.setVisible(true);
-
-    }*/
-
-
-
-
-
 }
 
 

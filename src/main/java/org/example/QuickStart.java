@@ -10,8 +10,8 @@ public class QuickStart  {
 
     public static void main(String[] args) {
         controllerCompras mm=new controllerCompras();
-        user pepe= new user("fafe","Roosevelt",324);
-        user pepe2= new user("Fifi","fsf",324);
+        user pepe= new user("Juan Carlos Gardel","Roosevelt 3231",324);
+        user pepe2= new user("Halsey Fraga","Cramer 444",324);
         carrito car=new carrito(pepe);
         pedido ped=new pedido(car);
         factura fact= new factura( "MP" ,ped);
