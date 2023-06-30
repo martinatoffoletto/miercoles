@@ -23,6 +23,8 @@ public class pedido {
         preciofinal=0;
     }
 
+
+
     public carrito getContenido() {
         return contenido;
     }

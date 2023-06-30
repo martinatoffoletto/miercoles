@@ -28,17 +28,26 @@ public class Pedido extends JDialog{
         this.setContentPane(pnlPrincipal);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        //Elije Medio de Pago
+        asignarDatosUser(compra);
 
 
 
         //Muestra Precio
-
+        lblPrecioFinal.setText(String.valueOf(compra.getPrecio()));
 
         //Finaliza pedido
         comprarButton.addActionListener(new ActionListener() {
             @Override
                 public void actionPerformed(ActionEvent e) {
+                     //Elije Medio de Pago
+                     String pagoMedio= pagoComboBox2.getSelectedItem().toString();
+
+                     //Agrega Pedido
+                     pedido PedidoFinal= new pedido(compra);
+
+                    //Crea Factura
+                    factura FacturaFianal= new factura(pagoMedio, PedidoFinal);
+
                     //cerrar ventana
                     JOptionPane.showMessageDialog(null, "Pedido Realizado");
                     setVisible(false);
@@ -48,10 +57,10 @@ public class Pedido extends JDialog{
 
     }
     //Muestra Productos
-    public void asignarDatosUser(carrito compra) {
+    public void asignarDatosUser(carrito compraRealizada) {
 
         DefaultListModel model = new DefaultListModel();
-        model.addAll(compra.getProductos());
+        model.addAll(compraRealizada.getProductos());
         listaProductos.setModel(model);
     }
 
