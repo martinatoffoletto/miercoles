@@ -4,6 +4,7 @@ import javax.swing.*;
 import clases.*;
 import controllers.*;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,11 +21,13 @@ public class Carro extends JDialog{
     private JComboBox ElegirCarro;
     private JButton guardarCarritoButton;
 
+    private Carro self;
+
 
     private List<producto> productos = new ArrayList<producto>();
 
-    public Carro(user user){
-        //super(user.getNombre()+" Carrito");
+    public Carro(Window owner, user user){
+        super(owner, "Carrito");
         this.setSize(400, 200);
         this.setModal(true);
         this.setLocationRelativeTo(null);
@@ -88,7 +91,7 @@ public class Carro extends JDialog{
         relizarPedidoButton.addActionListener(new ActionListener() {
             @Override
                 public void actionPerformed(ActionEvent e) {
-                Pedido Pedidos = new Pedido(user);
+                Pedido Pedidos = new Pedido(self, user);
                 Pedidos.setVisible(true);
                 setVisible(false);
 

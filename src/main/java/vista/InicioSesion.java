@@ -1,34 +1,34 @@
 package vista;
-
-import clases.user;
-import controllers.controllerCompras;
+import clases.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import controllers.*;
 
-public class FrmLogin extends JFrame{
+public class InicioSesion extends JFrame{
     private JPanel pnlPrincipal;
     private JComboBox comboBox1;
     private JButton ingresarButton;
-    private JButton cerrarButton;
+    private JButton salirButton;
 
-    public FrmLogin() {
-        super("Login");
+    public InicioSesion() {
+        super ("Login");
         setSize(400, 200);
         setLocationRelativeTo(null);
         setContentPane(pnlPrincipal);
         asignarDatosCombo();
 
+        //user usuar=new user("paula","roosvelt1234",1234);
         ingresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Principal menuPrincipal = new Principal((user) comboBox1.getSelectedItem());
+                //Principal menuPrincipal = new Principal(usuar);
+                menuPrincipal.setVisible(true);
 
-               Principal menuPrincipal = new Principal((user) comboBox1.getSelectedItem());
-               menuPrincipal.setVisible(true);
-                setVisible(false);
             }
         });
-        cerrarButton.addActionListener(new ActionListener() {
+        salirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
@@ -37,6 +37,7 @@ public class FrmLogin extends JFrame{
     }
 
     private void asignarDatosCombo() {
+
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         modelo.addAll(controllerCompras.getUsuario());
         comboBox1.setModel(modelo);

@@ -11,17 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido extends JDialog{
-    private JButton relizarPedidoButton;
+    private JButton comprarButton;
     private JPanel pnlPrincipal;
-    private JButton agregarButton;
-    private JComboBox elijeProducto;
-    private JButton eliminarButton;
-    private JComboBox elijeCant;
+    private JList listaProductos;
+    private JComboBox pagoComboBox2;
+    private JLabel lblPrecioFinal;
 
 
     private List<producto> productos = new ArrayList<producto>();
 
-    public Pedido(Window owner){
+    public Pedido(Window owner,user Usuario){
         super(owner, "Pedidos");
         this.setSize(400, 200);
         this.setModal(true);
@@ -36,36 +35,13 @@ public class Pedido extends JDialog{
         //elije Producto y cantidad
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         modelo.addAll(Productos);
-        elijeProducto.setModel(modelo);
-        elijeCant.setModel(modelo);
 
         ArrayList<producto> pedido = new ArrayList<producto>();
-        //permite agregar un producto
-        agregarButton.addActionListener(new ActionListener() {
-            int cant_producto;
-            String productoElegido;
-            producto ppelegido;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                productoElegido= elijeProducto.getSelectedItem().toString();
-                //pedido.add();
-            }
-        });
 
-        //permiteEliminar producto
 
-        eliminarButton.addActionListener(new ActionListener() {
-            String productoEliminado;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                productoEliminado= elijeProducto.getSelectedItem().toString();
-                //pedido.remove()
-
-            }
-        });
 
         //Finaliza pedido
-        relizarPedidoButton.addActionListener(new ActionListener() {
+        comprarButton.addActionListener(new ActionListener() {
             @Override
                 public void actionPerformed(ActionEvent e) {
                     //cerrar ventana
