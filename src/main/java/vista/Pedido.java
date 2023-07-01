@@ -22,15 +22,13 @@ public class Pedido extends JDialog{
 
     public Pedido(Window owner,user Usuario, carrito compra){
         super(owner, "Pedidos");
-        this.setSize(400, 200);
+        this.setSize(600, 600);
         this.setModal(true);
         this.setLocationRelativeTo(null);
         this.setContentPane(pnlPrincipal);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+        //Muestra productos
         asignarDatosUser(compra);
-
-
 
         //Muestra Precio
         lblPrecioFinal.setText(String.valueOf(compra.getPrecio()));
@@ -56,7 +54,7 @@ public class Pedido extends JDialog{
 
 
     }
-    //Muestra Productos
+    //Asigna Productos
     public void asignarDatosUser(carrito compraRealizada) {
 
         DefaultListModel model = new DefaultListModel();

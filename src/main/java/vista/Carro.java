@@ -38,6 +38,7 @@ public class Carro extends JDialog{
 
         //Elije carrito nuevo o viejo:
         DefaultComboBoxModel carritoelegir = new DefaultComboBoxModel();
+        //Lista Carritos
         ArrayList<carrito> carrosPers=controllerCompras.getCarritos(user);
         carrito nuevo=controllerCompras.CrearCarrito(user);
         carrosPers.add(nuevo);
@@ -57,34 +58,35 @@ public class Carro extends JDialog{
             }
         });
 
-
         //elije Producto y cantidad
         DefaultComboBoxModel modelo1 = new DefaultComboBoxModel();
         DefaultComboBoxModel modelo2 = new DefaultComboBoxModel();
         modelo.addAll(controllerCompras.getProds());
         elijeProducto.setModel(modelo1);
         elijeCant.setModel(modelo2);
-        //int cant= (int) elijeCant.getSelectedItem();
-
 
         //permite agregar un producto
         agregarButton.addActionListener(new ActionListener() {
-            //AGREGAR WHILE X CANTIDAD
             @Override
             public void actionPerformed(ActionEvent e) {
-                finalCarroElegido.agregarProd((producto) elijeProducto.getSelectedItem());
-
+                int cant= (int) elijeCant.getSelectedItem();
+                while (cant!=0) {
+                    finalCarroElegido.agregarProd((producto) elijeProducto.getSelectedItem());
+                    cant--;
+                }
             }
         });
 
-        //permiteEliminar producto
+        //permite eliminar producto
 
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //AGREGAR WHILE X CANTIDAD
+                int cant= (int) elijeCant.getSelectedItem();
+                while (cant!=0) {
                 finalCarroElegido.borrarProd((producto) elijeProducto.getSelectedItem());
-
+                    cant--;
+                }
             }
         });
 
@@ -97,14 +99,5 @@ public class Carro extends JDialog{
                 setVisible(false);
                 }
         });
-
-
     }
-
-
-
-
-
-
-
 }
