@@ -7,13 +7,15 @@ public class user {
     private String nombre;
     private String direccion;
     private int dni;
-    private Time actividaDiaria;
+    private int actividaDiaria;
     private String categoria;
 
-    public user(String nombre, String direccion, int dni) {
+    public user(String nombre, String direccion, int dni,int actividaDiaria,String categoria) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.dni = dni;
+        this.categoria=categoria;
+        this.actividaDiaria=actividaDiaria;
     }
 
 
@@ -22,7 +24,7 @@ public class user {
         return direccion;
     }
 
-    public Time getActividaDiaria() {
+    public int getActividaDiaria() {
         return actividaDiaria;
     }
 
@@ -30,7 +32,7 @@ public class user {
         return categoria;
     }
 
-    public void setActividaDiaria(Time actividaDiaria) {
+    public void setActividaDiaria(int actividaDiaria) {
         this.actividaDiaria = actividaDiaria;
     }
 

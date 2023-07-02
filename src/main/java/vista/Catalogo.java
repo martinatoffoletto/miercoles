@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Catalogo extends JDialog {
@@ -16,6 +15,7 @@ public class Catalogo extends JDialog {
     private JLabel lblProducto;
     private JLabel lblComentarios;
     private JLabel lblPrecio;
+    private JLabel lblImagen;
 
     //Lista Productos
     private List<producto> productos = controllerCompras.getProds();
@@ -46,6 +46,11 @@ public class Catalogo extends JDialog {
             }
 
         });
+
+        lblImagen = new JLabel();
+        producto producto=(producto)productoComboBox.getSelectedItem();
+        lblImagen.setIcon(new ImageIcon(producto.getFotos()));
+        pnlPrincipal.add(lblImagen);
     }
 
 

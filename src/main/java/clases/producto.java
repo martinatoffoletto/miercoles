@@ -6,8 +6,7 @@ import java.util.*;
 public class producto {
     private String nombre;
     private String descripcion;
-    private ArrayList<File> fotos;
-    private ArrayList<File> videos;
+    private String fotos;
     private ArrayList<String> coments;
 
     public int getPrecio() {
@@ -20,11 +19,10 @@ public class producto {
 
     private int precio;
 
-    public producto(String nombre, String descripcion, ArrayList<File> fotos, ArrayList<File> videos, ArrayList<String> coments, int precio) {
+    public producto(String nombre, String descripcion, String fotos, ArrayList<String> coments, int precio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fotos = fotos;
-        this.videos = videos;
         this.coments = coments;
         this.precio = precio;
     }
@@ -40,14 +38,12 @@ public class producto {
     }
 
 
-    public ArrayList<File> getFotos() {
+    public String getFotos() {
         return fotos;
     }
 
 
-    public ArrayList<File> getVideos() {
-        return videos;
-    }
+
 
 
     public ArrayList<String> getComents() {
@@ -55,5 +51,11 @@ public class producto {
     }
 
 
+    @Override
+    public String toString() {
+        return "producto{" +
+                "nombre='" + nombre + '\'' +
+                '}';
+    }
 }
 

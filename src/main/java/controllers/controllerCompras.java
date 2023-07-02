@@ -31,7 +31,7 @@ public class controllerCompras {
     }
 
 
-    //carga datos de la base de datos (MODIFICAR)
+    //carga datos de la base de datos
 
 
     public MongoDatabase IngresarBD(){
@@ -43,37 +43,41 @@ public class controllerCompras {
     }
 
 
+
+
+
    public void CargarDatos(){
+        //PARTE MONGO
         String uri = "mongodb+srv://matoffo:Jimin3002@cluster0.6ertzut.mongodb.net/?retryWrites=true&w=majority";
         MongoDatabase database= IngresarBD();
         if (database!=null) {
             MongoCollection<Document> productos = database.getCollection("productos");
-            MongoCollection<Document> pedidoss = database.getCollection("pedidos");
-            MongoCollection<Document> factura = database.getCollection("facturas");
             MongoCollection<Document> usuarios = database.getCollection("usuarios");
-            MongoCollection<Document> carritos = database.getCollection("carritos");
 
 
             for (Document doc : productos.find()) {
-                //producto product = new producto();
-                //this.prods.add(product);
+
+                List LIST =doc.getList("comente",String.class);
+                ArrayList<String> comentarios = new ArrayList<>(LIST);
+                producto product = new producto(doc.getString("nombre"),doc.getString("desc"),doc.getString("fotos"), comentarios,doc.getInteger("precio"));
+                this.prods.add(product);
             }
 
             for (Document doc : usuarios.find()) {
-               // user usuario = new user();
-                //this.usuario.add(usuario);
+               user usuario = new user(doc.getString("nombre"),doc.getString("direccion"),doc.getInteger("dni"),doc.getInteger("actividad"),doc.getString("categoria"));
+               this.usuario.add(usuario);
             }
 
-            for (Document doc : factura.find()) {
-               // factura fact = new factura();
-                //this.facturas.add(fact);
-            }
 
-            for (Document doc : pedidoss.find()) {
-                //pedido pedido = new pedido();
-                //this.pedidos.add(pedido);
-            }
+
+
         }
+
+
+        //PARTE CASSANDRA
+
+
+
     }
 
 
