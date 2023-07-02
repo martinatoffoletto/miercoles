@@ -1,13 +1,12 @@
 package controllers;
 
 import clases.*;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
+import com.mongodb.client.*;
+import org.bson.*;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class controllerCompras {
@@ -27,20 +26,11 @@ public class controllerCompras {
         this.usuario = new ArrayList<user>();
         this.pedidos = new ArrayList<pedido>();
         this.carritos = new ArrayList<carrito>();
-        //CargarDatos();
+        CargarDatos();
     }
 
 
     //carga datos de la base de datos
-
-
-    public MongoDatabase IngresarBD(){
-        String uri = "mongodb+srv://matoffo:Jimin3002@cluster0.6ertzut.mongodb.net/?retryWrites=true&w=majority";
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("TP");
-            return database;
-        }
-    }
 
 
 
@@ -48,36 +38,39 @@ public class controllerCompras {
 
    public void CargarDatos(){
         //PARTE MONGO
-        String uri = "mongodb+srv://matoffo:Jimin3002@cluster0.6ertzut.mongodb.net/?retryWrites=true&w=majority";
-        MongoDatabase database= IngresarBD();
-        if (database!=null) {
-            MongoCollection<Document> productos = database.getCollection("productos");
-            MongoCollection<Document> usuarios = database.getCollection("usuarios");
+       String uri = "mongodb+srv://matoffo:Jimin3002@cluster0.6ertzut.mongodb.net/?retryWrites=true&w=majority";
+       try (MongoClient mongoClient = MongoClients.create(uri)) {
+           MongoDatabase database = mongoClient.getDatabase("TP");
+           System.out.println("ENTRE " + database.getName());
 
+           if (database != null) {
+               MongoCollection<Document> productos = database.getCollection("productos");
+               MongoCollection<Document> usuarios = database.getCollection("usuarios");
+               System.out.println("colecciones");
 
-            for (Document doc : productos.find()) {
+               for (Document doc : productos.find()) {
 
-                List LIST =doc.getList("comente",String.class);
-                ArrayList<String> comentarios = new ArrayList<>(LIST);
-                producto product = new producto(doc.getString("nombre"),doc.getString("desc"),doc.getString("fotos"), comentarios,doc.getInteger("precio"));
-                this.prods.add(product);
-            }
-
-            for (Document doc : usuarios.find()) {
-               user usuario = new user(doc.getString("nombre"),doc.getString("direccion"),doc.getInteger("dni"),doc.getInteger("actividad"),doc.getString("categoria"));
-               this.usuario.add(usuario);
-            }
-
+                   List LIST = doc.getList("comente", String.class);
+                   ArrayList<String> comentarios = new ArrayList<>(LIST);
+                   producto product = new producto(doc.getString("nombre"), doc.getString("desc"), doc.getString("imagen"), comentarios, doc.getInteger("precio"));
+                   this.prods.add(product);
+               }
 
 
 
-        }
+               for (Document doc : usuarios.find()) {
+                   user usuario = new user(doc.getString("nombre"), doc.getString("direccion"), doc.getInteger("dni"), doc.getInteger("actividad"), doc.getString("categoria"));
+                   this.usuario.add(usuario);
+               }
 
 
-        //PARTE CASSANDRA
+           }
 
 
+           //PARTE CASSANDRA
 
+
+       }
     }
 
 
@@ -90,10 +83,8 @@ public class controllerCompras {
         return car;
     }
     public static void GuardarCarro(carrito car){
-        carritos.add(car);//agregar a bd tmbn
-       // MongoDatabase bs=IngresarBD();
-        //MongoCollection<Document> carritos = bs.getCollection("carritos");
-        //carritos.insertOne(new Document().append("_id", new ObjectId()).append("title", "Ski Bloopers").append("genres", Arrays.asList("Documentary", "Comedy")));
+        carritos.add(car);//agregar a bd tmbn CASSANDRA
+
 
 
 
@@ -101,23 +92,19 @@ public class controllerCompras {
     }
 
       //crear pedidio en base a carrito
-    public pedido ConvertirPedido(carrito car){
+    public static pedido ConvertirPedido(carrito car){
         pedido ped= new pedido(car);
         pedidos.add(ped);
-        MongoDatabase bs=IngresarBD();
-        MongoCollection<Document> pedidos = bs.getCollection("pedidos");
-        //pedidos.insertOne(new Document().append("_id", new ObjectId()).append("title", "Ski Bloopers").append("genres", Arrays.asList("Documentary", "Comedy")));
+        //AGREGAR PEDIDO A BASE DE DATOS
         return  ped;
 
     }
 
     //crear factura en base a pedido
-    public factura ConvertirFactura(pedido pedido, String pago){
+    public static factura ConvertirFactura(pedido pedido, String pago){
         factura fac= new factura(pago,pedido );
         facturas.add(fac);
-        MongoDatabase bs=IngresarBD();
-        MongoCollection<Document> facturas = bs.getCollection("facturas");
-        //facturas.insertOne(new Document().append("_id", new ObjectId()).append("title", "Ski Bloopers").appe
+        //AGREGAR FACTURA A BASE DE DATOS
         return  fac;
     }
 
@@ -170,4 +157,42 @@ public class controllerCompras {
         return carritosuser;}
 
 
+    //EUGE PASAR FORMATOS
+
+    //para guadar carrito hay q buscar el objeto usuario
+    public static user BuscarUser(int dni){
+        for (user user: usuario){
+            if (user.getDni()==dni){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    //para guardar pedido hay q buscar el objeto carrito
+    public static carrito BuscarCarro(int codCarro){
+        for (carrito car: carritos){
+            if (car.getCodCarrito()==codCarro){
+                return car;
+            }
+        }
+        return null;
+
+    }
+
+    //para guardar factura hay q buscar objeto pedido
+    public static pedido BuscarPedido(int nroPedido){
+        for (pedido ped: pedidos){
+            if (ped.getNroPedido()==nroPedido){
+                return ped;
+            }
+        }
+        return null;
+
+    }
+
+
 }
+
+
+

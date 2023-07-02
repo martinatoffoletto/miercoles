@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 public class carrito {
+    public int getCodCarrito() {
+        return codCarrito;
+    }
+
     private int codCarrito;
     private ArrayList<producto> carro;
 
@@ -44,8 +48,7 @@ public class carrito {
 
     @Override
     public String toString() {
-        return "carrito{" +
-                "codCarrito='" + codCarrito + '\'' +
-                '}';
+        return
+                "Codigo de carrito" + codCarrito + '\'';
     }
 }

@@ -45,8 +45,7 @@ public class Carro extends JDialog{
         carritoelegir.addAll(carrosPers);
         ElegirCarro.setModel(carritoelegir);
 
-        carrito carroElegido= controllerCompras.CrearCarrito(user);
-        carroElegido=(carrito) carritoelegir.getSelectedItem();
+        carrito carroElegido=(carrito) carritoelegir.getSelectedItem();
         carrito finalCarroElegido = carroElegido;
 
 
@@ -94,7 +93,8 @@ public class Carro extends JDialog{
         relizarPedidoButton.addActionListener(new ActionListener() {
             @Override
                 public void actionPerformed(ActionEvent e) {
-                Pedido Pedidos = new Pedido(self, user, finalCarroElegido);
+                pedido pedidoG= controllerCompras.ConvertirPedido(finalCarroElegido);
+                Pedido Pedidos = new Pedido(self, pedidoG);
                 Pedidos.setVisible(true);
                 setVisible(false);
                 }

@@ -6,6 +6,10 @@ import java.util.Date;
 
 public class pedido {
 
+    public int getNroPedido() {
+        return nroPedido;
+    }
+
     private int nroPedido;
     private Date fechaPedido;
 

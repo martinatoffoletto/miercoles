@@ -20,7 +20,7 @@ public class Pedido extends JDialog{
 
     private List<producto> productos = new ArrayList<producto>();
 
-    public Pedido(Window owner,user Usuario, carrito compra){
+    public Pedido(Window owner, pedido pedido){
         super(owner, "Pedidos");
         this.setSize(600, 600);
         this.setModal(true);
@@ -28,10 +28,10 @@ public class Pedido extends JDialog{
         this.setContentPane(pnlPrincipal);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //Muestra productos
-        asignarDatosUser(compra);
+        asignarDatosUser(pedido);
 
         //Muestra Precio
-        lblPrecioFinal.setText(String.valueOf(compra.getPrecio()));
+        lblPrecioFinal.setText(String.valueOf(pedido.getContenido().getPrecio()));
 
         //Finaliza pedido
         comprarButton.addActionListener(new ActionListener() {
@@ -40,11 +40,8 @@ public class Pedido extends JDialog{
                      //Elije Medio de Pago
                      String pagoMedio= pagoComboBox2.getSelectedItem().toString();
 
-                     //Agrega Pedido
-                     pedido PedidoFinal= new pedido(compra);
-
                     //Crea Factura
-                    factura FacturaFianal= new factura(pagoMedio, PedidoFinal);
+                    factura FacturaFianal= controllerCompras.ConvertirFactura(pedido,pagoMedio);
 
                     //cerrar ventana
                     JOptionPane.showMessageDialog(null, "Pedido Realizado");
@@ -55,10 +52,10 @@ public class Pedido extends JDialog{
 
     }
     //Asigna Productos
-    public void asignarDatosUser(carrito compraRealizada) {
+    public void asignarDatosUser(pedido pedido) {
 
         DefaultListModel model = new DefaultListModel();
-        model.addAll(compraRealizada.getProductos());
+        model.addAll(pedido.getContenido().getProductos());
         listaProductos.setModel(model);
     }
 

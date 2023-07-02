@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Catalogo extends JDialog {
@@ -17,8 +18,7 @@ public class Catalogo extends JDialog {
     private JLabel lblPrecio;
     private JLabel lblImagen;
 
-    //Lista Productos
-    private List<producto> productos = controllerCompras.getProds();
+
 
     public  Catalogo(Window owner){
         super(owner," Catalogo ");
@@ -32,25 +32,23 @@ public class Catalogo extends JDialog {
 
         //Establezco modelo
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
-        modelo.addAll(productos);
+        modelo.addAll( controllerCompras.getProds());
+        productoComboBox.setModel(modelo);
 
         //Obtiene Informacion del Producto
 
         productoComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                lblProducto.setText(String.valueOf(productoComboBox.getSelectedIndex()));
                 producto aux= (producto) productoComboBox.getSelectedItem();
+                lblProducto.setText(String.valueOf(aux.getNombre()));
                 lblComentarios.setText(String.valueOf(aux.getComents()));
-                lblPrecio.setText(String.valueOf(aux.getComents()));
+                lblPrecio.setText(String.valueOf(aux.getPrecio()));
+                lblImagen.setIcon(new ImageIcon(aux.getFotos()));
             }
 
         });
 
-        lblImagen = new JLabel();
-        producto producto=(producto)productoComboBox.getSelectedItem();
-        lblImagen.setIcon(new ImageIcon(producto.getFotos()));
-        pnlPrincipal.add(lblImagen);
     }
 
 

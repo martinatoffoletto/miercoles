@@ -45,8 +45,8 @@ public class Principal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Catalogo catalogo = new Catalogo(self);
-                catalogo.setVisible(true);
+                Catalogo catalogoO = new Catalogo(self);
+                catalogoO.setVisible(true);
             }
         });
 

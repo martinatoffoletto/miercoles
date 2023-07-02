@@ -53,9 +53,7 @@ public class producto {
 
     @Override
     public String toString() {
-        return "producto{" +
-                "nombre='" + nombre + '\'' +
-                '}';
+        return nombre.toUpperCase();
     }
 }
 
