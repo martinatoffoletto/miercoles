@@ -59,7 +59,7 @@ public class user {
         datos.add(0,"Nombre: "+ nombre);
         datos.add(1,"DNI: "+ dni);
         datos.add(2,"Direccion: "+ direccion);
-        datos.add(2,"Categoria: "+ categoria);
+        datos.add(3,"Categoria: "+ categoria);
 
         return datos;
 

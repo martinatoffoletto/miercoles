@@ -18,9 +18,22 @@ public class pedido {
         preciofinal= contenido.getPrecio();
         return preciofinal;
     }
+
+    public int getCod() {
+        return nroPedido;
+    }
+
     public pedido(carrito contenido) {
         this.contenido = contenido;
-        preciofinal=0;
+        preciofinal=contenido.getPrecio();
+    }
+
+    public void setFecha(Date fechaped) {
+        this.fechaPedido= fechaped;
+    }
+
+    public void setnroPedido(int numped) {
+        this.nroPedido= numped;
     }
 
 

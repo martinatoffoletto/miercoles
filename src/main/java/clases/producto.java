@@ -41,10 +41,7 @@ public class producto {
     public String getFotos() {
         return fotos;
     }
-
-
-
-
+    
 
     public ArrayList<String> getComents() {
         return coments;

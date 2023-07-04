@@ -56,9 +56,6 @@ public class controllerCompras {
     }
 
 
-
-
-
    public void CargarDatos() {
        //PARTE MONGO
        String uri = "mongodb+srv://matoffo:Jimin3002@cluster0.6ertzut.mongodb.net/?retryWrites=true&w=majority";
@@ -126,17 +123,19 @@ public class controllerCompras {
 
        //Extrae datos
 
-       for (QueryOuterClass.Row row : facturasCas.getRowsList()) {
+       /*for (QueryOuterClass.Row row : carritosCas.getRowsList()) {
            // Access row data using column names or indexes
-           String codFacturas = row.getValues(0).getString();
-           //Date fechaFacturas = (Date) row.getValues(1).getDate();
-           String metodoPago = row.getValues(2).getString();
-           int nroPedido = (int) row.getValues(3).getInt();
-           //pedido pedidoRealizado= new pedido();
-           //crea factura
-           //factura facturaCreada= new factura(codFacturas,metodoPago,pedidoRealizado,fechaFacturas);
-
-
+           int codCarrito  = (int) row.getValues(0).getInt();
+           int dni = (int) row.getValues(2).getInt();
+           int precio = (int) row.getValues(3).getInt();
+           //ArrayList<String> lprod=row.getValues(1).getInt();
+           //crea carrito
+           carrito nuevoCarro= new carrito(buscarUser(dni));
+           //agrega productos
+           for (String pro:lprod){
+               producto auxprod= buscarProducto(pro);
+               nuevoCarro.agregarProd(auxprod);
+           }
        }
 
        for (QueryOuterClass.Row row : pedidosCas.getRowsList()) {
@@ -146,24 +145,75 @@ public class controllerCompras {
            int codCarrito = (int) row.getValues(2).getInt();
            int precio = (int) row.getValues(3).getInt();
            //crea pedido
-           //pedido pedidoNuevo= new pedido();
+           pedido pedidoNuevo= new pedido(buscarCarr(codCarrito));
+           //pedidoNuevo.setFecha(fechaPedidos);
+           pedidoNuevo.setnroPedido(nroPedido);
 
        }
 
-       for (QueryOuterClass.Row row : carritosCas.getRowsList()) {
+       for (QueryOuterClass.Row row : facturasCas.getRowsList()) {
            // Access row data using column names or indexes
-           int codCarrito  = (int) row.getValues(0).getInt();
-           String carro = row.getValues(1).getString();
-           int dni = (int) row.getValues(2).getInt();
-           int precio = (int) row.getValues(3).getInt();
-           //crea carrito
-           //carrito nuevoCarro= CrearCarrito();
+           String codFacturas = row.getValues(0).getString();
+           //Date fechaFacturas = (Date) row.getValues(1).getDate();
+           String metodoPago = row.getValues(2).getString();
+           int nroPedido = (int) row.getValues(3).getInt();
+           //crea factura
+           //factura facturaCreada= new factura(codFacturas,metodoPago,fechaFacturas, buscarPed(nroPedido));
 
-       }
+
+       }*/
 
 
    }
-    //carrito guardar y crear
+   //devuelve carrito segun num
+   public pedido buscarPed(int codaux) {
+       pedido resultado = null;
+       for (pedido auxusu : pedidos) {
+           if (auxusu.getCod()==codaux) {
+               resultado = auxusu;
+               break;
+           }
+       }
+       return resultado;
+   }
+
+    public carrito buscarCarr(int codaux) {
+        carrito resultado = null;
+        for (carrito auxusu : carritos) {
+            if (auxusu.getNro()==codaux) {
+                resultado = auxusu;
+                break;
+            }
+        }
+        return resultado;
+    }
+
+   //devuelve usuario segurn dni
+
+    public user buscarUser(int dniaux) {
+        user resultado = null;
+        for (user auxusu : usuario) {
+            if (auxusu.getDni()==dniaux) {
+                resultado = auxusu;
+                break;
+            }
+        }
+        return resultado;
+    }
+
+    public producto buscarProducto(String nombreaux ) {
+        producto resultado = null;
+        for (producto auxusu : prods) {
+            if (auxusu.getNombre().equals(nombreaux)) {
+                resultado = auxusu;
+                break;
+            }
+        }
+        return resultado;
+    }
+
+
+   //carrito guardar y crear
     public static carrito CrearCarrito(user user){
         carrito car=new carrito(user);
         return car;
