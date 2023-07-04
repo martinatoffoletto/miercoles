@@ -1,16 +1,24 @@
 package controllers;
 
 import clases.*;
+import com.datastax.oss.driver.api.core.CqlSession;
+import com.datastax.oss.driver.api.core.CqlSessionBuilder;
+import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.stargate.grpc.StargateBearerToken;
+import io.stargate.proto.StargateGrpc;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class controllerCompras {
 
@@ -29,7 +37,7 @@ public class controllerCompras {
         this.usuario = new ArrayList<user>();
         this.pedidos = new ArrayList<pedido>();
         this.carritos = new ArrayList<carrito>();
-        //CargarDatos();
+        CargarDatos();
     }
 
 
@@ -48,33 +56,52 @@ public class controllerCompras {
 
 
 
-   public void CargarDatos(){
-        //PARTE MONGO
-        String uri = "mongodb+srv://matoffo:Jimin3002@cluster0.6ertzut.mongodb.net/?retryWrites=true&w=majority";
-        MongoDatabase database= IngresarBD();
-        if (database!=null) {
-            MongoCollection<Document> productos = database.getCollection("productos");
-            MongoCollection<Document> usuarios = database.getCollection("usuarios");
+   public void CargarDatos() {
+       //PARTE MONGO
+       String uri = "mongodb+srv://matoffo:Jimin3002@cluster0.6ertzut.mongodb.net/?retryWrites=true&w=majority";
+       MongoDatabase database = IngresarBD();
+       if (database != null) {
+           MongoCollection<Document> productos = database.getCollection("productos");
+           MongoCollection<Document> usuarios = database.getCollection("usuarios");
 
 
-            for (Document doc : productos.find()) {
+           for (Document doc : productos.find()) {
 
-                List LIST =doc.getList("comente",String.class);
-                ArrayList<String> comentarios = new ArrayList<>(LIST);
-                producto product = new producto(doc.getString("nombre"),doc.getString("desc"),doc.getString("fotos"), comentarios,doc.getInteger("precio"));
-                this.prods.add(product);
-            }
+               List LIST = doc.getList("comente", String.class);
+               ArrayList<String> comentarios = new ArrayList<>(LIST);
+               producto product = new producto(doc.getString("nombre"), doc.getString("desc"), doc.getString("fotos"), comentarios, doc.getInteger("precio"));
+               this.prods.add(product);
+           }
 
-            for (Document doc : usuarios.find()) {
-               user usuario = new user(doc.getString("nombre"),doc.getString("direccion"),doc.getInteger("dni"),doc.getInteger("actividad"),doc.getString("categoria"));
+           for (Document doc : usuarios.find()) {
+               user usuario = new user(doc.getString("nombre"), doc.getString("direccion"), doc.getInteger("dni"), doc.getInteger("actividad"), doc.getString("categoria"));
                this.usuario.add(usuario);
-            }
+           }
 
-        }
+       }
 
 
-        //PARTE CASSANDRA
+       //PARTE CASSANDRA
+/*
 
+          String ASTRA_DB_ID      = "<id>";
+          String ASTRA_DB_REGION  = "us-east1";
+          String ASTRA_TOKEN      = "<token>";
+          String ASTRA_KEYSPACE   = "tpfinal";
+
+           //-------------------------------------
+           // 1. Initializing Connectivity
+           //-------------------------------------
+           ManagedChannel channel = ManagedChannelBuilder
+                   .forAddress(ASTRA_DB_ID + "-" + ASTRA_DB_REGION + ".apps.astra.datastax.com", 443)
+                   .useTransportSecurity()
+                   .build();
+
+           // blocking stub version
+           StargateGrpc.StargateBlockingStub blockingStub =
+                   StargateGrpc.newBlockingStub(channel)
+                           .withDeadlineAfter(10, TimeUnit.SECONDS)
+                           .withCallCredentials(new StargateBearerToken(ASTRA_TOKEN));
 
 
        ResultSet facturasCas = (ResultSet) session.execute("SELECT * FROM tpfinal.facturas");
@@ -117,7 +144,8 @@ public class controllerCompras {
 
 
 
-
+*/
+   }
     //carrito guardar y crear
     public static carrito CrearCarrito(user user){
         carrito car=new carrito(user);

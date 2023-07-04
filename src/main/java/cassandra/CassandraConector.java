@@ -39,24 +39,9 @@ public class CassandraConector {
             //Cierra cluster
         //session.close();
     }
-
-
-}
 /*
 //agregar datos
 
-<dependencies>
-  <dependency>
-    <groupId>io.stargate.grpc</groupId>
-    <artifactId>grpc-proto</artifactId>
-    <version>1.0.41</version>
-  </dependency>
-  <dependency>
-    <groupId>io.grpc</groupId>
-    <artifactId>grpc-netty-shaded</artifactId>
-    <version>1.41.0</version>
-  </dependency>
-</dependencies>
 
 private static final String ASTRA_DB_ID      = "<id>";
 private static final String ASTRA_DB_REGION  = "<region>";
