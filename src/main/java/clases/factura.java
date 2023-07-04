@@ -15,8 +15,10 @@ public class factura {
 
 
 
-    public factura(String formapago, pedido pedidoaFacturar) {
+    public factura(String codigoFact,String formapago, pedido pedidoaFacturar,Date fechaFactura) {
+        this.codigoFact=codigoFact;
         Formapago = formapago;
+        this.fechaFactura=fechaFactura;
         this.pedidoaFacturar = pedidoaFacturar;
     }
     public int precioPagar(){

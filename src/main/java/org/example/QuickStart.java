@@ -15,7 +15,7 @@ public class QuickStart  {
         carrito car=new carrito(pepe);
         System.out.println(car);
         pedido ped=new pedido(car);
-        factura fact= new factura( "MP" ,ped);
+        //factura fact= new factura( "MP" ,ped);
         //System.out.println((pepe +" "+ pepe2));
         controllerCompras.getUsuario().add(pepe);
         controllerCompras.getUsuario().add(pepe2);

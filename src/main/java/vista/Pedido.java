@@ -3,11 +3,13 @@ package vista;
 import javax.swing.*;
 import clases.*;
 import controllers.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Pedido extends JDialog{
@@ -43,8 +45,11 @@ public class Pedido extends JDialog{
                      //Agrega Pedido
                      pedido PedidoFinal= new pedido(compra);
 
+                     int codFact= (int) (Math.random()* 1000) +1 ;
+                     Date fecha= new Date();
+
                     //Crea Factura
-                    factura FacturaFianal= new factura(pagoMedio, PedidoFinal);
+                    factura FacturaFianal= new factura(Integer.toString(codFact),pagoMedio, PedidoFinal, fecha);
 
                     //cerrar ventana
                     JOptionPane.showMessageDialog(null, "Pedido Realizado");

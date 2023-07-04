@@ -13,10 +13,12 @@ import com.mongodb.client.MongoDatabase;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.stargate.grpc.StargateBearerToken;
+import io.stargate.proto.QueryOuterClass;
 import io.stargate.proto.StargateGrpc;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -37,7 +39,8 @@ public class controllerCompras {
         this.usuario = new ArrayList<user>();
         this.pedidos = new ArrayList<pedido>();
         this.carritos = new ArrayList<carrito>();
-        CargarDatos();
+        //CargarDatos();
+
     }
 
 
@@ -82,11 +85,10 @@ public class controllerCompras {
 
 
        //PARTE CASSANDRA
-/*
 
-          String ASTRA_DB_ID      = "<id>";
+          String ASTRA_DB_ID      = "9d7510a0-3365-40ac-9a12-8ce74d3c0480";
           String ASTRA_DB_REGION  = "us-east1";
-          String ASTRA_TOKEN      = "<token>";
+          String ASTRA_TOKEN      = "AstraCS:dAmZPJZhDigsDyKMCkEBDgRo:2d7fd310969a5cbff8dde5664ad4d702568a7334fb2cfce0bd24816ad29b4bc5";
           String ASTRA_KEYSPACE   = "tpfinal";
 
            //-------------------------------------
@@ -103,48 +105,63 @@ public class controllerCompras {
                            .withDeadlineAfter(10, TimeUnit.SECONDS)
                            .withCallCredentials(new StargateBearerToken(ASTRA_TOKEN));
 
+       //Generar datos
 
-       ResultSet facturasCas = (ResultSet) session.execute("SELECT * FROM tpfinal.facturas");
-       ResultSet pedidosCas = (ResultSet) session.execute("SELECT * FROM tpfinal.pedidos");
-       ResultSet carritosCas = (ResultSet) session.execute("SELECT * FROM tpfinal.carritos");
+       QueryOuterClass.Response facturasCasor = blockingStub.executeQuery(QueryOuterClass
+               .Query.newBuilder()
+               .setCql("SELECT * FROM " + ASTRA_KEYSPACE + ".facturas").build());
 
-       for (Row row : facturasCas) {
+       QueryOuterClass.Response pedidosCasor = blockingStub.executeQuery(QueryOuterClass
+               .Query.newBuilder()
+               .setCql("SELECT * FROM " + ASTRA_KEYSPACE + ".pedidos").build());
+
+       QueryOuterClass.Response carritosCasor = blockingStub.executeQuery(QueryOuterClass
+               .Query.newBuilder()
+               .setCql("SELECT * FROM " + ASTRA_KEYSPACE + ".carritos").build());
+
+       QueryOuterClass.ResultSet facturasCas= facturasCasor.getResultSet();
+       QueryOuterClass.ResultSet pedidosCas= pedidosCasor.getResultSet();
+       QueryOuterClass.ResultSet carritosCas= carritosCasor.getResultSet();
+
+
+       //Extrae datos
+
+       for (QueryOuterClass.Row row : facturasCas.getRowsList()) {
            // Access row data using column names or indexes
-           String codFacturas = row.getString("codFacturas");
-           String fechaFacturas = (String ) row.getString("fechaFacturas");
-           String metodoPago = row.getString("metodoPago");
-           int nroPedido = row.getInt("nroPedido");
+           String codFacturas = row.getValues(0).getString();
+           //Date fechaFacturas = (Date) row.getValues(1).getDate();
+           String metodoPago = row.getValues(2).getString();
+           int nroPedido = (int) row.getValues(3).getInt();
+           //pedido pedidoRealizado= new pedido();
            //crea factura
+           //factura facturaCreada= new factura(codFacturas,metodoPago,pedidoRealizado,fechaFacturas);
+
 
        }
 
-       for (Row row : pedidosCas) {
+       for (QueryOuterClass.Row row : pedidosCas.getRowsList()) {
            // Access row data using column names or indexes
-           int nroPedido = row.getInt("nroPedido");
-           String fechaPedidos = (String ) row.getString("fechaPedidos");
-           int codCarrito = row.getInt("codCarrito");
-           int precio = row.getInt("precio");
+           int nroPedido  = (int) row.getValues(0).getInt();
+           //String fechaPedidos = (String) row.getValues(1).getDate();
+           int codCarrito = (int) row.getValues(2).getInt();
+           int precio = (int) row.getValues(3).getInt();
            //crea pedido
+           //pedido pedidoNuevo= new pedido();
 
        }
 
-       for (Row row : carritosCas) {
+       for (QueryOuterClass.Row row : carritosCas.getRowsList()) {
            // Access row data using column names or indexes
-           int codCarrito = row.getInt("codCarrito");
-           String carro = row.getString("carro");
-           int dni = row.getInt("dni");
-           int precio = row.getInt("precio");
+           int codCarrito  = (int) row.getValues(0).getInt();
+           String carro = row.getValues(1).getString();
+           int dni = (int) row.getValues(2).getInt();
+           int precio = (int) row.getValues(3).getInt();
            //crea carrito
+           //carrito nuevoCarro= CrearCarrito();
+
        }
 
 
-
-    }
-
-
-
-
-*/
    }
     //carrito guardar y crear
     public static carrito CrearCarrito(user user){
@@ -174,14 +191,14 @@ public class controllerCompras {
     }
 
     //crear factura en base a pedido
-    public factura ConvertirFactura(pedido pedido, String pago){
-        factura fac= new factura(pago,pedido );
-        facturas.add(fac);
-        MongoDatabase bs=IngresarBD();
-        MongoCollection<Document> facturas = bs.getCollection("facturas");
+    //public factura ConvertirFactura(pedido pedido, String pago){
+        //factura fac= new factura(pago,pedido );
+        //facturas.add(fac);
+        //MongoDatabase bs=IngresarBD();
+        //MongoCollection<Document> facturas = bs.getCollection("facturas");
         //facturas.insertOne(new Document().append("_id", new ObjectId()).append("title", "Ski Bloopers").appe
-        return  fac;
-    }
+        //return  fac;
+    //}
 
 
     //lista productos
