@@ -30,6 +30,9 @@ public class CassandraConector {
 
 
 
+
+
+
         }
 
 
@@ -41,6 +44,52 @@ public class CassandraConector {
 }
 /*
 //agregar datos
+
+<dependencies>
+  <dependency>
+    <groupId>io.stargate.grpc</groupId>
+    <artifactId>grpc-proto</artifactId>
+    <version>1.0.41</version>
+  </dependency>
+  <dependency>
+    <groupId>io.grpc</groupId>
+    <artifactId>grpc-netty-shaded</artifactId>
+    <version>1.41.0</version>
+  </dependency>
+</dependencies>
+
+private static final String ASTRA_DB_ID      = "<id>";
+private static final String ASTRA_DB_REGION  = "<region>";
+private static final String ASTRA_TOKEN      = "<token>";
+private static final String ASTRA_KEYSPACE   = "<keyspace>";
+
+public static void main(String[] args)
+throws Exception {
+  //-------------------------------------
+  // 1. Initializing Connectivity
+  //-------------------------------------
+  ManagedChannel channel = ManagedChannelBuilder
+          .forAddress(ASTRA_DB_ID + "-" + ASTRA_DB_REGION + ".apps.astra.datastax.com", 443)
+          .useTransportSecurity()
+          .build();
+
+  // blocking stub version
+  StargateGrpc.StargateBlockingStub blockingStub =
+      StargateGrpc.newBlockingStub(channel)
+          .withDeadlineAfter(10, TimeUnit.SECONDS)
+          .withCallCredentials(new StargateBearerToken(ASTRA_TOKEN));
+
+
+
+   QueryOuterClass.Response queryString = blockingStub.executeQuery(QueryOuterClass
+  .Query.newBuilder()
+  .setCql("SELECT firstname, lastname FROM " + ASTRA_KEYSPACE + ".users")
+  .build());
+
+
+
+
+
 INSERT INTO
 facturas (codFacturas, fechaFacturas, metodoPago, nroPedido)
 VALUES ('a1', '2011-02-03', 'MP', 1234);
