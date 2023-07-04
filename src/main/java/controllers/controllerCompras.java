@@ -17,9 +17,9 @@ import io.stargate.proto.QueryOuterClass;
 import io.stargate.proto.StargateGrpc;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class controllerCompras {
@@ -56,7 +56,7 @@ public class controllerCompras {
     }
 
 
-   public void CargarDatos() {
+   public void CargarDatos() throws ParseException {
        //PARTE MONGO
        String uri = "mongodb+srv://matoffo:Jimin3002@cluster0.6ertzut.mongodb.net/?retryWrites=true&w=majority";
        MongoDatabase database = IngresarBD();
@@ -123,17 +123,19 @@ public class controllerCompras {
 
        //Extrae datos
 
-       /*for (QueryOuterClass.Row row : carritosCas.getRowsList()) {
+       for (QueryOuterClass.Row row : carritosCas.getRowsList()) {
            // Access row data using column names or indexes
+           QueryOuterClass.Collection setProd = row.getValues(1).getCollection();
            int codCarrito  = (int) row.getValues(0).getInt();
            int dni = (int) row.getValues(2).getInt();
            int precio = (int) row.getValues(3).getInt();
-           //ArrayList<String> lprod=row.getValues(1).getInt();
+           List lprod=setProd.getElementsList();
            //crea carrito
            carrito nuevoCarro= new carrito(buscarUser(dni));
            //agrega productos
-           for (String pro:lprod){
-               producto auxprod= buscarProducto(pro);
+           for (Object pro:lprod){
+               String prod= String.valueOf(pro);
+               producto auxprod= buscarProducto(prod);
                nuevoCarro.agregarProd(auxprod);
            }
        }
@@ -141,12 +143,14 @@ public class controllerCompras {
        for (QueryOuterClass.Row row : pedidosCas.getRowsList()) {
            // Access row data using column names or indexes
            int nroPedido  = (int) row.getValues(0).getInt();
-           //String fechaPedidos = (String) row.getValues(1).getDate();
+           String fechaPedidos =  row.getValues(1).getString();
            int codCarrito = (int) row.getValues(2).getInt();
            int precio = (int) row.getValues(3).getInt();
            //crea pedido
            pedido pedidoNuevo= new pedido(buscarCarr(codCarrito));
-           //pedidoNuevo.setFecha(fechaPedidos);
+           SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+           Date datefor= formato.parse(fechaPedidos);
+           pedidoNuevo.setFecha(datefor);
            pedidoNuevo.setnroPedido(nroPedido);
 
        }
@@ -154,14 +158,16 @@ public class controllerCompras {
        for (QueryOuterClass.Row row : facturasCas.getRowsList()) {
            // Access row data using column names or indexes
            String codFacturas = row.getValues(0).getString();
-           //Date fechaFacturas = (Date) row.getValues(1).getDate();
+           String fechaFacturas = row.getValues(1).getString();
            String metodoPago = row.getValues(2).getString();
            int nroPedido = (int) row.getValues(3).getInt();
+           SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+           Date datefor= formato.parse(fechaFacturas);
            //crea factura
-           //factura facturaCreada= new factura(codFacturas,metodoPago,fechaFacturas, buscarPed(nroPedido));
+           factura facturaCreada= new factura(codFacturas,metodoPago, buscarPed(nroPedido), datefor);
 
 
-       }*/
+       }
 
 
    }
