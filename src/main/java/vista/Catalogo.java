@@ -47,10 +47,10 @@ public class Catalogo extends JDialog {
 
         });
 
-        lblImagen = new JLabel();
-        producto producto=(producto)productoComboBox.getSelectedItem();
-        lblImagen.setIcon(new ImageIcon(producto.getFotos()));
-        pnlPrincipal.add(lblImagen);
+        //lblImagen = new JLabel();
+        //producto producto=(producto)productoComboBox.getSelectedItem();
+        //lblImagen.setIcon(new ImageIcon(producto.getFotos()));
+        //pnlPrincipal.add(lblImagen);
     }
 
 

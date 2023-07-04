@@ -1,6 +1,8 @@
 package controllers;
 
 import clases.*;
+import com.datastax.oss.driver.api.core.cql.ResultSet;
+import com.datastax.oss.driver.api.core.cql.Row;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -68,13 +70,45 @@ public class controllerCompras {
                this.usuario.add(usuario);
             }
 
-
-
-
         }
 
 
         //PARTE CASSANDRA
+
+
+
+       ResultSet facturasCas = (ResultSet) session.execute("SELECT * FROM tpfinal.facturas");
+       ResultSet pedidosCas = (ResultSet) session.execute("SELECT * FROM tpfinal.pedidos");
+       ResultSet carritosCas = (ResultSet) session.execute("SELECT * FROM tpfinal.carritos");
+
+       for (Row row : facturasCas) {
+           // Access row data using column names or indexes
+           String codFacturas = row.getString("codFacturas");
+           String fechaFacturas = (String ) row.getString("fechaFacturas");
+           String metodoPago = row.getString("metodoPago");
+           int nroPedido = row.getInt("nroPedido");
+           //crea factura
+
+       }
+
+       for (Row row : pedidosCas) {
+           // Access row data using column names or indexes
+           int nroPedido = row.getInt("nroPedido");
+           String fechaPedidos = (String ) row.getString("fechaPedidos");
+           int codCarrito = row.getInt("codCarrito");
+           int precio = row.getInt("precio");
+           //crea pedido
+
+       }
+
+       for (Row row : carritosCas) {
+           // Access row data using column names or indexes
+           int codCarrito = row.getInt("codCarrito");
+           String carro = row.getString("carro");
+           int dni = row.getInt("dni");
+           int precio = row.getInt("precio");
+           //crea carrito
+       }
 
 
 
