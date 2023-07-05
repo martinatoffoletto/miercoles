@@ -3,7 +3,9 @@ package vista;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import clases.factura;
 import clases.user;
 import controllers.controllerCompras;
 
@@ -64,7 +66,16 @@ public class Principal extends JFrame{
 
     public void asignarDatosFacturas(user user) {
         DefaultListModel model = new DefaultListModel();
-        model.addAll(controllerCompras.getFacturas(user));
+        ArrayList<Object> listaj=new ArrayList<>();
+        for (factura fact:controllerCompras.getFacturas(user)){
+            String fcod="Codigo: "+fact.getCodFact();
+            String fpre=" Precio: "+fact.getPedidoaFacturar().getContenido().getPrecio();
+            String fecod=" Fecha: "+fact.getFechaFactura();
+            Object fin=fcod+fpre+fecod;
+            listaj.add(fin);
+        }
+        //model.addAll(controllerCompras.getFacturas(user));
+        model.addAll(listaj);
         list2.setModel(model);
     }
 

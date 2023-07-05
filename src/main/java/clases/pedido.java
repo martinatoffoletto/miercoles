@@ -5,11 +5,6 @@ import clases.carrito;
 import java.util.Date;
 
 public class pedido {
-
-    public int getNroPedido() {
-        return nroPedido;
-    }
-
     private int nroPedido;
 
     public Date getFechaPedido() {
@@ -44,8 +39,6 @@ public class pedido {
     public void setnroPedido(int numped) {
         this.nroPedido= numped;
     }
-
-
 
     public carrito getContenido() {
         return contenido;

@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Carro extends JDialog{
     private JButton relizarPedidoButton;
@@ -19,12 +18,14 @@ public class Carro extends JDialog{
     private JComboBox elijeCant;
     private JComboBox ElegirCarro;
     private JButton guardarCarritoButton;
+    private JButton nuevoCarritoButton;
     private Carro self;
+    private carrito finalCarroElegido;
 
 
     public Carro(Window owner, user user){
         super(owner, "Carrito");
-        this.setSize(400, 200);
+        this.setSize(600, 600);
         this.setModal(true);
         this.setLocationRelativeTo(null);
         this.setContentPane(pnlPrincipal);
@@ -38,15 +39,8 @@ public class Carro extends JDialog{
         DefaultComboBoxModel carritoelegir = new DefaultComboBoxModel();
         //Lista Carritos
         ArrayList<carrito> carrosPers=controllerCompras.getCarritos(user);
-        carrito nuevo=controllerCompras.CrearCarrito(user);
-        carrosPers.add(nuevo);
         carritoelegir.addAll(carrosPers);
         ElegirCarro.setModel(carritoelegir);
-
-        carrito carroElegido=(carrito) carritoelegir.getSelectedItem();
-        carrito finalCarroElegido = carroElegido;
-
-
 
 
         //elije Producto y cantidad
@@ -67,12 +61,19 @@ public class Carro extends JDialog{
         guardarCarritoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controllerCompras.GuardarCarro(finalCarroElegido);
+                carrito carroElegido=(carrito) carritoelegir.getSelectedItem();
+                finalCarroElegido = carroElegido;
 
             }
         });
-
-
+        nuevoCarritoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carrito nuevo=controllerCompras.CrearCarrito(user);
+                finalCarroElegido= nuevo;
+                carrosPers.add(nuevo);
+            }
+        });
 
 
 
@@ -104,6 +105,7 @@ public class Carro extends JDialog{
         relizarPedidoButton.addActionListener(new ActionListener() {
             @Override
                 public void actionPerformed(ActionEvent e) {
+                controllerCompras.GuardarCarro(finalCarroElegido);
                 pedido pedidoG= controllerCompras.ConvertirPedido(finalCarroElegido);
                 Pedido Pedidos = new Pedido(self, pedidoG);
                 Pedidos.setVisible(true);

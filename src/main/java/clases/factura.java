@@ -8,12 +8,16 @@ public class factura {
     private String Formapago;
     private pedido pedidoaFacturar;
 
-
+    public String getCodFact() {
+        return codigoFact;
+    }
     public pedido getPedidoaFacturar() {
         return pedidoaFacturar;
     }
 
-
+    public Date getFechaFactura() {
+        return fechaFactura;
+    }
 
     public factura(String codigoFact,String formapago, pedido pedidoaFacturar,Date fechaFactura) {
         this.codigoFact=codigoFact;

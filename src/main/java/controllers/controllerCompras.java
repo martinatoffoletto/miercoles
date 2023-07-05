@@ -10,12 +10,10 @@ import io.stargate.proto.StargateGrpc;
 import org.bson.*;
 import org.bson.types.ObjectId;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class controllerCompras {
@@ -69,8 +67,6 @@ public class controllerCompras {
             }
         }
 
-        /*
-
             //PARTE CASSANDRA
             String ASTRA_DB_ID = "9d7510a0-3365-40ac-9a12-8ce74d3c0480";
             String ASTRA_DB_REGION = "us-east1";
@@ -114,54 +110,43 @@ public class controllerCompras {
 
             for (QueryOuterClass.Row row : carritosCas.getRowsList()) {
                 // Access row data using column names or indexes
-                QueryOuterClass.Collection setProd = row.getValues(1).getCollection();
                 int codCarrito = (int) row.getValues(0).getInt();
+                String setProd = row.getValues(1).getString();
                 int dni = (int) row.getValues(2).getInt();
                 int precio = (int) row.getValues(3).getInt();
-                List lprod = setProd.getElementsList();
                 //crea carrito
                 carrito nuevoCarro = new carrito(buscarUser(dni));
+                producto prodaux= buscarProducto(setProd);
                 //agrega productos
-                for (Object pro : lprod) {
-                    String prod = String.valueOf(pro);
-                    producto auxprod = buscarProducto(prod);
-                    nuevoCarro.agregarProd(auxprod);
-                }
                 carritos.add(nuevoCarro);
             }
 
             for (QueryOuterClass.Row row : pedidosCas.getRowsList()) {
                 // Access row data using column names or indexes
                 int nroPedido = (int) row.getValues(0).getInt();
-                String fechaPedidos = row.getValues(1).getString();
+                long fechaPedidos = row.getValues(1).getTime();
                 int codCarrito = (int) row.getValues(2).getInt();
                 int precio = (int) row.getValues(3).getInt();
                 //crea pedido
                 pedido pedidoNuevo = new pedido(buscarCarr(codCarrito));
-                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                Date datefor = formato.parse(fechaPedidos);
+                Date datefor = new Date(fechaPedidos);
                 pedidoNuevo.setFecha(datefor);
                 pedidoNuevo.setnroPedido(nroPedido);
                 pedidos.add(pedidoNuevo);
-
-
             }
 
             for (QueryOuterClass.Row row : facturasCas.getRowsList()) {
                 // Access row data using column names or indexes
                 String codFacturas = row.getValues(0).getString();
-                String fechaFacturas = row.getValues(1).getString();
+                long fechaFacturas = row.getValues(1).getTime();
                 String metodoPago = row.getValues(2).getString();
                 int nroPedido = (int) row.getValues(3).getInt();
-                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                Date datefor = formato.parse(fechaFacturas);
+                Date datefor = new Date(fechaFacturas);
                 //crea factura
                 factura facturaCreada = new factura(codFacturas, metodoPago, buscarPed(nroPedido), datefor);
                 facturas.add(facturaCreada);
 
             }
-
-         */
 
     }
 
@@ -170,8 +155,8 @@ public class controllerCompras {
     public pedido buscarPed(int codaux) {
         pedido resultado = null;
         for (pedido auxusu : pedidos) {
+            resultado = auxusu;
             if (auxusu.getCod()==codaux) {
-                resultado = auxusu;
                 break;
             }
         }
@@ -181,8 +166,8 @@ public class controllerCompras {
     public carrito buscarCarr(int codaux) {
         carrito resultado = null;
         for (carrito auxusu : carritos) {
-            if (auxusu.getNro()==codaux) {
-                resultado = auxusu;
+            resultado = auxusu;
+            if (auxusu.getNro() == codaux) {
                 break;
             }
         }
@@ -194,8 +179,8 @@ public class controllerCompras {
     public user buscarUser(int dniaux) {
         user resultado = null;
         for (user auxusu : usuario) {
+            resultado = auxusu;
             if (auxusu.getDni()==dniaux) {
-                resultado = auxusu;
                 break;
             }
         }
@@ -225,7 +210,42 @@ public class controllerCompras {
         carritos.add(car);
         ///CASSANDRA NUEVO CARRO
 
+        String ASTRA_DB_ID = "9d7510a0-3365-40ac-9a12-8ce74d3c0480";
+        String ASTRA_DB_REGION = "us-east1";
+        String ASTRA_TOKEN = "AstraCS:dAmZPJZhDigsDyKMCkEBDgRo:2d7fd310969a5cbff8dde5664ad4d702568a7334fb2cfce0bd24816ad29b4bc5";
+        String ASTRA_KEYSPACE = "tpfinal";
 
+        //-------------------------------------
+        // 1. Initializing Connectivity
+        //-------------------------------------
+        ManagedChannel channel = ManagedChannelBuilder
+                .forAddress(ASTRA_DB_ID + "-" + ASTRA_DB_REGION + ".apps.astra.datastax.com", 443)
+                .useTransportSecurity()
+                .build();
+
+        // blocking stub version
+        StargateGrpc.StargateBlockingStub blockingStub =
+                StargateGrpc.newBlockingStub(channel)
+                        .withDeadlineAfter(10, TimeUnit.SECONDS)
+                        .withCallCredentials(new StargateBearerToken(ASTRA_TOKEN));
+
+        //agrego carrito
+        int ccar=car.getCodCarrito();
+        ArrayList<producto> lprod= car.getProductos();
+        String carro = "";
+        for (producto pro: lprod){
+            carro+=pro.getNombre()+", ";
+        }
+        int dniaux=car.getUsuario().getDni();
+        int precio=car.getPrecio();
+
+        blockingStub.executeBatch(
+                QueryOuterClass.Batch.newBuilder()
+                        .addQueries(
+                                QueryOuterClass.BatchQuery.newBuilder()
+                                        .setCql("INSERT INTO tpfinal.carritos (codCarrito, carro,dni,precio) VALUES" +
+                                                "("+ccar+",'"+carro+"',"+dniaux+","+precio+")")
+                                        .build()).build());
     }
 
       //crear pedidio en base a carrito
@@ -233,18 +253,78 @@ public class controllerCompras {
         pedido ped= new pedido(car);
         pedidos.add(ped);
         //CASSANDRA NUEVO PEDIDO
+        String ASTRA_DB_ID = "9d7510a0-3365-40ac-9a12-8ce74d3c0480";
+        String ASTRA_DB_REGION = "us-east1";
+        String ASTRA_TOKEN = "AstraCS:dAmZPJZhDigsDyKMCkEBDgRo:2d7fd310969a5cbff8dde5664ad4d702568a7334fb2cfce0bd24816ad29b4bc5";
+        String ASTRA_KEYSPACE = "tpfinal";
+
+        //-------------------------------------
+        // 1. Initializing Connectivity
+        //-------------------------------------
+        ManagedChannel channel = ManagedChannelBuilder
+                .forAddress(ASTRA_DB_ID + "-" + ASTRA_DB_REGION + ".apps.astra.datastax.com", 443)
+                .useTransportSecurity()
+                .build();
+
+        // blocking stub version
+        StargateGrpc.StargateBlockingStub blockingStub =
+                StargateGrpc.newBlockingStub(channel)
+                        .withDeadlineAfter(10, TimeUnit.SECONDS)
+                        .withCallCredentials(new StargateBearerToken(ASTRA_TOKEN));
+        //agrego pedido
+        Random rr= new Random();
+        int nped=rr.nextInt(1000);
+        ped.setnroPedido(nped);
+        int ccar=car.getCodCarrito();
+        Date hoy=new Date();
+        ped.setFecha(hoy);
+        long fped= hoy.getTime();
+        int precio=car.getPrecio();
+        blockingStub.executeBatch(
+                QueryOuterClass.Batch.newBuilder()
+                        .addQueries(
+                                QueryOuterClass.BatchQuery.newBuilder()
+                                        .setCql("INSERT INTO tpfinal.pedidos (nroPedido, fechaPedido,codCarrito,precio) VALUES" +
+                                                "("+nped+", '"+fped+"',"+ccar+","+precio+")")
+                                        .build()).build());
         return  ped;
-
-
-
     }
 
     //crear factura en base a pedido
-    public static factura ConvertirFactura(pedido pedido, String pago) {
-        String num ="32"; //cambiar pa q sea num random
-        factura fac = new factura(num,pago, pedido,pedido.getFechaPedido());
+    public static factura ConvertirFactura(pedido pedido1, String pago) {
+        Random rr= new Random();
+        int num=rr.nextInt(1000);
+        factura fac = new factura(String.valueOf(num),pago, pedido1,pedido1.getFechaPedido());
         facturas.add(fac);
         //CASSANDRA NUEVA FACTURA
+        String ASTRA_DB_ID = "9d7510a0-3365-40ac-9a12-8ce74d3c0480";
+        String ASTRA_DB_REGION = "us-east1";
+        String ASTRA_TOKEN = "AstraCS:dAmZPJZhDigsDyKMCkEBDgRo:2d7fd310969a5cbff8dde5664ad4d702568a7334fb2cfce0bd24816ad29b4bc5";
+        String ASTRA_KEYSPACE = "tpfinal";
+
+        //-------------------------------------
+        // 1. Initializing Connectivity
+        //-------------------------------------
+        ManagedChannel channel = ManagedChannelBuilder
+                .forAddress(ASTRA_DB_ID + "-" + ASTRA_DB_REGION + ".apps.astra.datastax.com", 443)
+                .useTransportSecurity()
+                .build();
+
+        // blocking stub version
+        StargateGrpc.StargateBlockingStub blockingStub =
+                StargateGrpc.newBlockingStub(channel)
+                        .withDeadlineAfter(10, TimeUnit.SECONDS)
+                        .withCallCredentials(new StargateBearerToken(ASTRA_TOKEN));
+        //agrego factura
+        Date hoy=new Date();
+        long fped= hoy.getTime();
+        blockingStub.executeBatch(
+                QueryOuterClass.Batch.newBuilder()
+                        .addQueries(
+                                QueryOuterClass.BatchQuery.newBuilder()
+                                        .setCql("INSERT INTO tpfinal.facturas (codFacturas, fechaFacturas,metodoPago,nroPedido) VALUES" +
+                                                "('"+num+"','"+fped+"','"+pago+"',"+pedido1.getCod()+")")
+                                        .build()).build());
         return fac;
          }
 
