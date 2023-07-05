@@ -11,6 +11,11 @@ public class pedido {
     }
 
     private int nroPedido;
+
+    public Date getFechaPedido() {
+        return fechaPedido;
+    }
+
     private Date fechaPedido;
 
     private carrito contenido;
