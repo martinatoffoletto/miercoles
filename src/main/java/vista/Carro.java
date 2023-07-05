@@ -21,8 +21,6 @@ public class Carro extends JDialog{
     private JButton guardarCarritoButton;
     private Carro self;
 
-    //Lista Productos
-    private List<producto> productos = controllerCompras.getProds();
 
     public Carro(Window owner, user user){
         super(owner, "Carrito");
@@ -34,7 +32,7 @@ public class Carro extends JDialog{
 
         //Asocia Productos
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-        modelo.addAll(productos);
+        modelo.addAll(controllerCompras.getProds());
 
         //Elije carrito nuevo o viejo:
         DefaultComboBoxModel carritoelegir = new DefaultComboBoxModel();
@@ -49,6 +47,23 @@ public class Carro extends JDialog{
         carrito finalCarroElegido = carroElegido;
 
 
+
+
+        //elije Producto y cantidad
+        DefaultComboBoxModel modelo1 = new DefaultComboBoxModel();
+        DefaultComboBoxModel modelo2 = new DefaultComboBoxModel();
+        modelo1.addAll(controllerCompras.getProds());
+        elijeProducto.setModel(modelo1);
+        ArrayList<Integer> cant= new ArrayList<>();
+        cant.add(1);
+        cant.add(2);
+        cant.add(3);
+        modelo2.addAll(cant);
+        elijeCant.setModel(modelo2);
+
+        //permite agregar un producto
+
+
         guardarCarritoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,14 +72,10 @@ public class Carro extends JDialog{
             }
         });
 
-        //elije Producto y cantidad
-        DefaultComboBoxModel modelo1 = new DefaultComboBoxModel();
-        DefaultComboBoxModel modelo2 = new DefaultComboBoxModel();
-        modelo.addAll(controllerCompras.getProds());
-        elijeProducto.setModel(modelo1);
-        elijeCant.setModel(modelo2);
 
-        //permite agregar un producto
+
+
+
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
