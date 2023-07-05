@@ -33,13 +33,13 @@ public class controllerCompras {
 
     private static ArrayList<carrito> carritos;
 
-    public controllerCompras(){
+    public controllerCompras() throws ParseException {
         this.prods = new ArrayList<producto>();
         this.facturas = new ArrayList<factura>();
         this.usuario = new ArrayList<user>();
         this.pedidos = new ArrayList<pedido>();
         this.carritos = new ArrayList<carrito>();
-        //CargarDatos();
+        CargarDatos();
 
     }
 
@@ -80,6 +80,7 @@ public class controllerCompras {
 
        }
 
+/*
 
        //PARTE CASSANDRA
 
@@ -138,6 +139,7 @@ public class controllerCompras {
                producto auxprod= buscarProducto(prod);
                nuevoCarro.agregarProd(auxprod);
            }
+           carritos.add(nuevoCarro);
        }
 
        for (QueryOuterClass.Row row : pedidosCas.getRowsList()) {
@@ -152,6 +154,8 @@ public class controllerCompras {
            Date datefor= formato.parse(fechaPedidos);
            pedidoNuevo.setFecha(datefor);
            pedidoNuevo.setnroPedido(nroPedido);
+           pedidos.add(pedidoNuevo);
+
 
        }
 
@@ -165,9 +169,11 @@ public class controllerCompras {
            Date datefor= formato.parse(fechaFacturas);
            //crea factura
            factura facturaCreada= new factura(codFacturas,metodoPago, buscarPed(nroPedido), datefor);
+           facturas.add(facturaCreada);
+*/
 
 
-       }
+       //}
 
 
    }

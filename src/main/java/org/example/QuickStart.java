@@ -4,11 +4,12 @@ import vista.*;
 import controllers.*;
 
 import javax.swing.*;
+import java.text.ParseException;
 
 
 public class QuickStart  {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         controllerCompras mm=new controllerCompras();
         user pepe= new user("Juan Carlos Gardel","Roosevelt 3231",324,240, "TOP");
         user pepe2= new user("Halsey Fraga","Cramer 444",324,240, "TOP");
