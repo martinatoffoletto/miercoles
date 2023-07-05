@@ -32,6 +32,11 @@ public class carrito {
         this.codCarrito= random.nextInt(1000);
     }
 
+    public int getNro(){
+        return codCarrito;
+    }
+
+
     public void agregarProd(producto prod){
             carro.add(prod);
             precio+= prod.getPrecio();
